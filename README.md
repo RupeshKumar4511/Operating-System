@@ -77,11 +77,6 @@ Program on execution is called as process.
 # CPU scheduling Algorithm: 
 
 1. First come first serve
-<br>
-Semaphores: It is an integer variable which is used in mutual exclusive manner by various concurrent cooperative proeces in order to achieve synchronization.
-or we can say it  is used to prevent race condition.
-<br>
-Race conditions occurs when multiple process using same system varibles at the same time .
 
 <br>
 
@@ -99,6 +94,117 @@ Race conditions occurs when multiple process using same system varibles at the s
 <br>
 
 6. Highest Response Ratio time next:
+
+# Software Solution to prevent race condition:
+
+Race conditions occurs when multiple process using same system varibles at the same time .
+<br>
+1 <b>Lock Variable :</b>
+<br>
+Porperties:
+<br>
+Mutual Exclusion : Not satisfied in all condition
+<br>
+Progress :satisfied
+<br>
+Bounded Waiting : satisfied
+
+
+<br>
+2 <b>Test Set Lock Mechanism</b>
+<br>
+Properties:
+<br>
+Mutual Exclusion :satisfied
+<br>
+Progress : satisfied
+<br>
+Bounded Waiting : not satisfied
+<br>
+
+```bash
+// Pseudocode
+lock = false;
+while(test_set(lock)):
+// critical section
+lock = false // exit secion
+
+
+def function(target):
+    temp = target
+    lock = true
+    return temp
+
+```
+
+
+3.<b>Turn Variable Approach :</b>
+<br>
+For two process
+<br>
+Mutual Exclusion : satisfied
+<br>
+Progress : not satisfied in all condition because spin lock is caused.
+<br>
+Bounded Waiting : satisfied (it means that everytime only one process is not executing) 
+
+<br>
+
+4.<b>Interested Variable Mechanism :</b>
+<br>
+For two process
+<br>
+Mutual Exclusion : satisfied
+<br>
+Progress : satisfied
+<br>
+Bounded Waiting : not satisfied  because dead lock is caused.
+
+5.<b>Paterson Solution :<b>
+<br>
+For two process
+<br>
+Mutual Exclusion : satisfied
+<br>
+Progress : satisfied
+<br>
+Bounded Waiting : satisfied
+
+# Hardware solution to prevent race conditions :
+Semaphore: It is an integer variable which is used in mutual exclusive manner by various concurrent cooperative proeces in order to achieve synchronization  or we can say it  is used to prevent race condition.
+
+<br>
+There are two types of Semaphore :
+<br>
+1.Binary Semaphore :
+
+```bash
+// wait or down or p function  or we can say entry section pseudocode
+
+p(semaphore s){
+if(s.value == 1 ){
+   s.value = 0;
+}
+else
+{
+    // block this process and place this in suspend list
+    sleep();
+}
+}
+
+
+// up or signal or v function or we can say that exit section pseudocode
+v(sempahore s){ 
+if(suspend list is empty){
+   s.value = 1 ;
+}
+else{
+   // select a process from suspend list.
+   wakeUp();
+}
+
+}
+```
 
 
 # System Calls :
