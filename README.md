@@ -144,10 +144,18 @@ For two process
 <br>
 Mutual Exclusion : satisfied
 <br>
+we can check mutual exclusion is satisfied by checking the multiple process enters into the critical section.
+
+<br>
 Progress : not satisfied in all condition because spin lock is caused.
 <br>
-Bounded Waiting : satisfied (it means that everytime only one process is not executing) 
+We can check the Progress conditions by altering the process to enter into the critcal sections (if there are two process then intially allows the first process to enter into cs and then check if intially second process enters into the cs then does first blocks the first process or not).
+<br>
 
+Bounded Waiting : satisfied (It means that everytime only one process is not executing).
+<br>
+We can check the Bounded waiting conditions by ensuring that any process should not wait more than a max-limit.
+This can be checked by allowig the same process to enter into the cs twice.
 <br>
 
 4.<b>Interested Variable Mechanism :</b>
@@ -160,7 +168,7 @@ Progress : satisfied
 <br>
 Bounded Waiting : not satisfied  because dead lock is caused.
 
-5.<b>Paterson Solution :<b>
+5.<b>Paterson Solution :</b>
 <br>
 For two process
 <br>
@@ -206,6 +214,41 @@ else{
 }
 ```
 
+2. Counting Semaphore :
+
+
+# DeadLock :
+It is a situation where no process got blocked and no process proceeds. All process are continuously waiting for infinite time.
+
+# DeadLock Handling strategies :
+# Deadlock Ignorance :
+# Deadlock Prevention: 
+<br>
+In deadlock Prevention we need to false any of four conditions from (Mutual exclusion, Hold and Wait , No preemption,circular wait.)
+<br>
+1. Mutual Exclusion : To make it false we have to make all resources are sharable .But there some resources which are not sharable like printer,tapeDrive etc because these resources cannot shared by more than process ar a time.
+<br>
+2. Hold and Wait :
+To make it false when a process comes we provide all the resources what the process is demanding. But practically it is not possible because if we provide all resources to a single process then all other process will continuously waiting.
+<br>
+
+3. No preemption : 
+To make it false we need to preempt a process from a cylic wait to prevent deadlock. This is not a good approach at all since if we take a resource away which is being used by the process then all the work which it has done till now can become inconsistent.
+
+<br>
+Remember that when we take resource from a process the process will go again in the ready queue.
+<br>
+Consider a printer is being used by any process. If we take the printer away from that process and assign it to some other process then all the data which has been printed can become inconsistent and ineffective and also the fact that the process can't start printing again from where it has left which causes performance inefficiency.
+
+<br>
+
+4. Circular wait :
+To violate circular wait, we can assign a priority number to each of the resource. A process can't request for a lesser priority resource. This ensures that not a single process can request a resource which is being utilized by some other process and no cycle will be formed.
+<br>
+Among all the methods, violating Circular wait is the only approach that can be implemented practically.
+
+# Deadlock Avoidance 
+# Deadlock Detection and Recovery 
 
 # System Calls :
 A system call in an operating system (OS) is a mechanism that allows a user-space program to request a service or resource from the kernel, which operates in a more privileged mode. These services include tasks like file handling, memory management, process control, networking, and device I/O.
