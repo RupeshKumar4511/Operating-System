@@ -33,7 +33,8 @@ Note : At present Linux has best throughput as compared to other os.
 <br>
 
 Note : Each process needs two types of system time: CPU time and IO time.
-Program on execution is called as process.
+<br>
+Note : Program on execution is called as process.
 
 2. Multiprogramming os : In this os , there are n no of instructions are stored in RAM and when the first process is either completed or go for I/O then in this conditions cpu goes to proeces another instructions.   
 
@@ -71,8 +72,14 @@ Program on execution is called as process.
 
 # Time related to Queues :
 
+Completion Time : The time at which a particular process is completed.
+<br>
+
 
 # CPU Scheduling :
+why do we need cpu Scheduling :
+<br>
+In some cases like when a process has more burst time then other process will starve.
 
 # CPU scheduling Algorithm: 
 
@@ -101,7 +108,7 @@ Race conditions occurs when multiple process using same system varibles at the s
 <br>
 1 <b>Lock Variable :</b>
 <br>
-Porperties:
+Porperties that needs to be satisfied for the solution of race condition:
 <br>
 Mutual Exclusion : Not satisfied in all condition
 <br>
@@ -155,7 +162,7 @@ We can check the Progress conditions by altering the process to enter into the c
 Bounded Waiting : satisfied (It means that everytime only one process is not executing).
 <br>
 We can check the Bounded waiting conditions by ensuring that any process should not wait more than a max-limit.
-This can be checked by allowig the same process to enter into the cs twice.
+This can be checked by allowing the same process to enter into the cs twice after IO.
 <br>
 
 4.<b>Interested Variable Mechanism :</b>
@@ -191,13 +198,16 @@ There are two types of Semaphore :
 
 p(semaphore s){
 if(s.value == 1 ){
+   disable_interrupts();  // Prevent preemption or interrupts
    s.value = 0;
 }
 else
 {
     // block this process and place this in suspend list
     sleep();
+
 }
+ enable_interrupts();   // Re-enable interrupts
 }
 
 
@@ -214,15 +224,23 @@ else{
 }
 ```
 
-2. Counting Semaphore :
 
+<br>
+Note : In binary semaphores, the checking and setting of the semaphore value are atomic operations. This ensures that mutual exclusion is preserved, and race conditions are avoided.In some systems, semaphores are managed by the operating system kernel, which ensures atomicity via interrupt disabling or through the use of spinlocks or mutexes. The OS guarantees that a semaphore's wait() (or P()) and signal() (or V()) operations are performed without interruption, ensuring that the semaphore value cannot be changed by other processes during these operations.
+
+
+<br>
+When it is implemented at user level then checking and setting the semaphore value should be atomic.
+<br>
+2. Counting Semaphore :
+semaphore can be any integer value.
 
 # DeadLock :
 It is a situation where no process got blocked and no process proceeds. All process are continuously waiting for infinite time.
 
 # DeadLock Handling strategies :
-# Deadlock Ignorance :
-# Deadlock Prevention: 
+# 1. Deadlock Ignorance :
+# 2. Deadlock Prevention: 
 <br>
 In deadlock Prevention we need to false any of four conditions from (Mutual exclusion, Hold and Wait , No preemption,circular wait.)
 <br>
@@ -248,6 +266,8 @@ To violate circular wait, we can assign a priority number to each of the resourc
 Among all the methods, violating Circular wait is the only approach that can be implemented practically.
 
 # Deadlock Avoidance 
+RGA , Banker's algorithms 
+
 # Deadlock Detection and Recovery 
 
 # System Calls :
@@ -280,6 +300,6 @@ Communication related : It is used for the intercommunication process.
 examples are :  pipe(),create/delete connection etc
 
 <br>
-There are also some  Protection and Security related system calls.
+There are also some Protection and Security related system calls.
 
 
