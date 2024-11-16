@@ -44,7 +44,27 @@ It monitors the execution of user programs to prevent errors.
 
 5. Security and Privacy : (Admin Password)
 
-# Os structure 
+# Os structure : 
+<img src="./Image/Simple_Os.png" alt="Simple Structure of OS"> <br>
+1. Simple Structure : This simple structure was followed by the old os like ms-dos . In this archiecture there are  four levels and all the three levels have direct access to base hardware layer(last level) . It is vulnerable to malicious program because if the application program fails then whole os will crash.
+
+<br>
+<img src="./Image/Monolithic.png" alt="Monolithic of OS"> <br>
+2. Monolithic Structure : This structure was followed by the earlier Unix operating system. In this archietecture there are two layers- one layer is system interface and other layer is kernel. This system is difficult to maintain and implemented because there are too many functionality are packed at kernel level and if there is an issue in cpu scheduling algorithm then we will have to touch entire kernel level and it is very difficult to implement. 
+
+<br>
+<img src="./Image/layered.png" alt="Layered of OS"> <br>
+3. Layered Structure : In this structure , os is divided into layers . The layer 0 is the hardware layer and last layer is User Interface . This is an efficient structure because if there is a problem at a layer then it is easy to implemented. However this is not the best structure because it is very difficult to design the each layer as it is difficult to decide that which layer is at the top and which is at below that top layer because a layer can access only the layers that belows it. for example the backing storage layer must below the memory management layer.
+This is also not more efficient because if a I/O process comes then it will have to use systems calls and hardware resource at layer 0 then system call will take more time to reach to the level 0.
+
+<br>
+<img src="./Image/MicroKernel.png" alt="MicroKernel of OS"> <br>
+4. Microkernels : In this Structure, there is a user mode level, a kernel mode level and hardware resource level. In this archierecture microkernel will provide only the core functionality and other functionality will be executed at user mode and the main function of the microkernel is to establishes a connection b/w client program and other device drivers/servers by messagse passing and this is its advantage. One of its Disadvantage is that Microkernels can suffers from performance decrease due to increase system function overhead because to provide functionality other than core functionlity, microkernels will have to pass messagse b/w client program and other device drivers/servers.
+
+<br>
+<img src="./Image/Modules.png" alt="Modules of OS"> <br>
+
+5. Modules : It means modular approach is used in structuring of the OS. This is the best methodology for os design which involves using object oriented programming techniques to create modular kernel. In this Structure, we have a core kernel and this core kernel will have only the core functionality of the kernel and the other functionalities are present in the form of modules which will be loaded dynamically either at boot time or run time. 
 
 # Os Operations: dual and multimode : 
 
@@ -145,15 +165,79 @@ Note : Program on execution is called as process.
 
 # Attributes of a process :
 
+The Process Control Block (PCB) is a critical data structure in the operating system used to store information about a specific process. 
+ 
 # Process States :
 
 # Process Schedular :
 
 # Process Queues :
 
+# Threads :
+Threads are lightweight units of execution within a process, sharing the same memory space and resources. It is also known as lightweight process.
+
+# Multithreading :
+Multithreading is a technique used in operating systems to improve the performance and responsiveness of computer systems. Multithreading allows multiple threads (i.e., lightweight processes) to share the same resources of a single process, such as the CPU, memory, and I/O devices. For example, in a browser, multiple tabs can be different threads. MS Word uses multiple threads: one thread to format the text, another thread to process inputs, etc.
+
+# Multithreading Models :
+The Multithreading Model defines how threads are managed and mapped between user and kernel space in an operating system. This model impacts how threads perform, how they're scheduled, and how they interact with each other and system resources. There are three main multithreading models:
+
+1. Many-to-One Model
+In the many-to-one model, multiple user-level threads are mapped to a single kernel thread. The OS doesn’t need to know about the individual user threads because they’re managed entirely in user space by a user-level library.
+
+Characteristics:
+Only one user thread can access the kernel at a time.
+The entire process blocks if a thread performs a blocking system call.
+Efficient thread creation and management because no kernel involvement is required.
+Limited concurrency, as only one thread can run in the kernel at a time on a single CPU.
+Use Case:
+Mostly used in older systems or environments where concurrency is needed but full parallelism isn’t essential.
+Disadvantages:
+Limited ability to utilize multicore systems since only one kernel thread represents all user threads.
+A blocking call in one thread can block the entire process, affecting responsiveness.
+2. One-to-One Model
+In the one-to-one model, each user thread maps directly to a kernel thread. This model provides greater concurrency than the many-to-one model since multiple threads can run on multiple cores simultaneously.
+
+Characteristics:
+Each user thread is created as a separate kernel thread, allowing for true parallelism.
+Blocking calls by one thread do not block other threads because each thread has its own kernel thread.
+More control over threading since the OS can manage each thread individually.
+Use Case:
+Widely used in operating systems like Linux and Windows, where higher concurrency and parallelism are essential.
+Disadvantages:
+Thread creation is slower and consumes more resources since each thread needs kernel support.
+Can lead to higher overhead due to the large number of kernel threads.
+3. Many-to-Many Model
+The many-to-many model provides a compromise between the many-to-one and one-to-one models by allowing multiple user-level threads to be mapped to a smaller or equal number of kernel threads. This enables the OS to manage user threads with greater flexibility.
+
+Characteristics:
+Multiple user threads can be executed in parallel on multiple kernel threads.
+The system can dynamically allocate kernel threads based on the number of active user threads.
+Efficient use of system resources and good concurrency without overwhelming the OS with excessive kernel threads.
+Use Case:
+Used in environments where a balance between resource management and parallelism is required. This model is also flexible for applications requiring various levels of concurrency.
+Disadvantages:
+Complexity in implementation due to the need for an intermediate layer to manage the mapping.
+Requires the OS to have good support for managing the mapping, which can introduce overhead.
+4. Two-Level Model
+The two-level model is similar to the many-to-many model but allows certain user threads to be directly mapped to a kernel thread, bypassing the many-to-many mapping. This direct mapping provides additional flexibility and control, allowing applications to optimize certain threads for performance or prioritize them.
+
+Characteristics:
+Combines the best of both the one-to-one and many-to-many models.
+Provides both the efficiency of many-to-many and the dedicated performance of one-to-one.
+Flexible for applications that need certain threads to have direct kernel access.
+Use Case:
+This model is used in systems requiring both high concurrency and flexibility, such as real-time systems where certain threads must meet strict deadlines.
+
+
+# Multicore Programming :
+Multicore Programming refers to designing and implementing software that can take full advantage of systems with multiple CPU cores. This allows multiple tasks or parts of tasks to be executed simultaneously, improving performance and efficiency, especially for compute-intensive applications.
+
+
+
 # Time related to Queues :
 
-Completion Time : The time at which a particular process is completed.
+Completion Time : The time at which a particular process's execution is completed.
 <br>
 
 
@@ -212,13 +296,15 @@ Bounded Waiting : not satisfied
 
 ```bash
 // Pseudocode
+
+
 lock = false;
 while(test_set(lock)):
 // critical section
 lock = false // exit secion
 
-
-def function(target):
+def test_set(target):
+    global lock
     temp = target
     lock = true
     return temp
@@ -364,24 +450,32 @@ File management: It is used to handle files.
 examples are : open(), read(), write(), createFile() , close()
 <br>
 
-Device Management : It is used to take the previleges for the use of system devices like printer.
+Device Management : It is used to gives the previleges for the use of system devices like printer.
 examples are : read() , write(), Reposition(),ioctl() etc. Here ioctl means input-output control.
 
 <br>
-Process management: It is used to direct the process. one example is like to load a process to a main memory. 
+Process management/Process Control: It is used to direct the process. one example is like to load a process to a main memory. 
 exmaples are : fork(), exec(), exit(), wait()
+<br>
+The fork system call is used to create a new process by duplicating the calling process.
+<br>
+When fork is called, it creates a child process that is a copy of the parent process.
+<br>
+The exec system call is used to replace the current process memory with a new process memory.
 <br>
  
 Information Maintenance : It is used to get the information about the process (we can say metadata).
-Examples are : getPId(),attributes,get system time and data.
+Examples are : getPId(),attributes,get system time and date.
 
 <br>
 
-Communication related : It is used for the intercommunication process.
+Inter-Process Communication related : It is used for the intercommunication process.
 examples are :  pipe(),create/delete connection etc
 
 <br>
-There are also some Protection and Security related system calls.
+
+Protection and Security related : There are also some Protection and Security related system calls.
+example are : chmod() which changes the ownership of a file or directory, allowing control over who has administrative rights to it.
 
 
 # Memory Management :
@@ -500,4 +594,3 @@ Size of table is calculated by the  => Total No of pages * No of bit required to
 
 # Demand Paging 
 
-# 

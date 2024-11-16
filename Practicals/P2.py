@@ -5,9 +5,9 @@ import multiprocessing
 
 
 def child_task():
-    print("child process executing the same program with same code..")
+    print("child process executing the same program with diiferent code..")
 
 def parent_task ():
-    print("parent process executing the same program with same code..")
+    print("parent process executing the same program with different code..")
 
         
