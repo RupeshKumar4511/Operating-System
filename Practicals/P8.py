@@ -1,34 +1,42 @@
-class Process:
-    def __init__(self, name, burst_time):
-        self.name= name
+class Process :
+    def __init__(self,process_id,burst_time):
+        self.process_id = process_id
         self.burst_time = burst_time
-        self.waiting_time = 0
-        self.turnaround_time = 0
-def sjf(processes):
+        self.waiting_time = 0 
+        self.turn_around_time = 0 
 
-    shorted_processes= sorted(processes, key = lambda x : x.burst_time)
-    total_turnaround_time = 0
-    total_waiting_time = 0
-    for i in range(len(shorted_processes)):
-        if i ==0:
-            shorted_processes[i].waiting_time =0
+def sortest_job_first(processes):
+    sorted_process = sorted(processes,key=lambda x : x.burst_time)
+    total_turn_around_time = 0 
+    total_waiting_time = 0 
+
+
+    for i in range(len(sorted_process)):
+        if(i == 0):
+            sorted_process[i].waiting_time = 0
         else:
-            shorted_processes[i].waiting_time = shorted_processes[i-1].waiting_time+ shorted_processes[i-1].burst_time
-        shorted_processes[i].turnaround_time = shorted_processes[i].waiting_time + shorted_processes[i].burst_time
-        total_turnaround_time += shorted_processes[i].turnaround_time
-        total_waiting_time += shorted_processes[i].waiting_time
-    for process in shorted_processes :
-        print(f"Process: {process.name}, Waiting time { process.waiting_time}, Turnaound Time : {process.turnaround_time}")
-    average_turnaround_time = total_turnaround_time/len(processes)
-    average_waiting_time = total_waiting_time/len(processes)
-    print("Average Turn Around time:", average_turnaround_time)
-    print("Average Waiting time :", average_waiting_time)
-processes_sjf = [
-    Process("P1", 9),
-    Process("P2", 4),
-    Process("P3", 6),
-    Process("P4", 5),
-    Process("P5", 2)
-]
+            sorted_process[i].waiting_time = sorted_process[i-1].waiting_time + sorted_process[i-1].burst_time
+        sorted_process[i].turn_around_time = sorted_process[i].waiting_time + sorted_process[i].burst_time
+        total_turn_around_time += sorted_process[i].turn_around_time
+        total_waiting_time += sorted_process[i].waiting_time
 
-sjf(processes_sjf)
+
+    for process in sorted_process:
+        print(f"Process_id : {process.process_id} , Burst_time : {process.burst_time}, Waiting_time {process.waiting_time}, Turn_around_time : {process.turn_around_time} ")
+
+        
+    print("average waiting time ",total_waiting_time/len(sorted_process))
+    print("average turn_around_time ",total_turn_around_time/len(sorted_process))
+
+def main():
+        processes = [Process("P1",9),
+                Process("P2",4),
+                Process("P3",5),
+                Process("P4",6),
+                Process("P5",2)
+        ]
+
+        sortest_job_first(processes)
+    
+if __name__ == "__main__":
+    main()
