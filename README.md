@@ -594,3 +594,87 @@ Size of table is calculated by the  => Total No of pages * No of bit required to
 
 # Demand Paging 
 
+# File System : 
+It is a module present in almost all of the os . It basically divides the files logically into blocks and map it to the sectors of the hard disk .In this way it is used to store the file and fetch the files.
+
+# Properties of File :
+Identifiers : A unique no is assigned to each file within a specific file system.
+
+<br>
+Type(Extension): 
+Along with the name, Each File has its own extension which identifies the type of the file. For example, a text file has the extension .txt, A video file can have the extension .mp4.
+
+# Operations on file :
+Reposition  : when os starts reading a file then by default pointer is at the base address or first word and this pointer can moved to last or to some other position to skip some word and this is called reposition.
+
+# Allocation method :
+1. Contiguous Allocation method 
+<br>
+2. Non Contiguous Allocation method :
+likedlist allocation and Indexed allocation are comes under this type of allocation.
+
+# File Access methods 
+# Directory Structure 
+
+# Magnetic Disk :
+It is a stoage device which provides large amount of secondary storage to modern computer.
+
+<br>
+<img src="./Image/magnetic.png" alt="magnetic disk image ">
+<br>
+Platter : A round surface(disk) containing magnetic coating.
+<br>
+Track : A circle on the disk surface which contains data is called track.
+<br>
+Sectors : It is a portion of track on the disk surface.Each sectors stores the same no of bytes . So the density of bits(information) is more in sectors near the center of disk . 
+
+<br>
+Cylinder : set of concentric track accessed simultaneously from read and write head.
+
+<br>
+Block : The smallest unit of data that can be written or read to/from the disk.
+<br>
+
+Read/Write Head : A transducer(reads the data and converts into electric signal) attached to an arm for reading/writing to/from the disk surface.
+
+<br>
+Arm Assembly : A mechanical unit holding all heads and arms.
+
+<br>
+Drive motor : It rotates the platter at a fixed speed . 
+<br>
+Head Motion : It is a mechanism required to move the head assembly in and out. 
+<br>
+Seek time : Time required by read and write head to move to correct tracks.
+<br>
+
+Latency Time : Time taken by the correct sectors to arrive under read/write head at correct tracks. It is also called rotational delay.
+
+<br>
+Latency Time  =  1/rotational speed
+<br>
+Average Latency Time  = 1/2 * 1/rotational speed
+
+<br>
+
+Average Access Time : It is the total time required by read write in reading/ writing data to/from the disk . 
+
+<br>
+
+Average Access time  = average seek_time + average Latency_time + Data_transfer_time + controller_overhead + queue_delay 
+
+<br>
+
+Data_transfer_time = 1/(No. of Sectors * rotational speed ) 
+
+<br>
+Data_transfer_rate = It refers to the no of bits that can be transferred per second . 
+<br>
+Data_transfer_rate =   No of rotations/sec  * track capacity * no of heads
+
+
+
+
+
+
+
