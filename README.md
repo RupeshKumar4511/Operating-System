@@ -51,21 +51,26 @@ It monitors the execution of user programs to prevent errors.
 <br>
 <img src="./Image/Monolithic.png" alt="Monolithic of OS"> <br>
 2. Monolithic Structure : This structure was followed by the earlier Unix operating system. In this archietecture there are two layers- one layer is system interface and other layer is kernel. This system is difficult to maintain and implemented because there are too many functionality are packed at kernel level and if there is an issue in cpu scheduling algorithm then we will have to touch entire kernel level and it is very difficult to implement. 
-
+ex => Linux os .
 <br>
 <img src="./Image/layered.png" alt="Layered of OS"> <br>
 3. Layered Structure : In this structure , os is divided into layers . The layer 0 is the hardware layer and last layer is User Interface . This is an efficient structure because if there is a problem at a layer then it is easy to implemented. However this is not the best structure because it is very difficult to design the each layer as it is difficult to decide that which layer is at the top and which is at below that top layer because a layer can access only the layers that belows it. for example the backing storage layer must below the memory management layer.
 This is also not more efficient because if a I/O process comes then it will have to use systems calls and hardware resource at layer 0 then system call will take more time to reach to the level 0.
-
+example: Windows NT (here NT means New Technology).   
 <br>
 <img src="./Image/MicroKernel.png" alt="MicroKernel of OS"> <br>
-4. Microkernels : In this Structure, there is a user mode level, a kernel mode level and hardware resource level. In this archierecture microkernel will provide only the core functionality and other functionality will be executed at user mode and the main function of the microkernel is to establishes a connection b/w client program and other device drivers/servers by messagse passing and this is its advantage. One of its Disadvantage is that Microkernels can suffers from performance decrease due to increase system function overhead because to provide functionality other than core functionlity, microkernels will have to pass messagse b/w client program and other device drivers/servers.
+4. Microkernels : In this Structure, there is a user mode level, a kernel mode level and hardware resource level. In this archierecture microkernel will provide only the core functionality and other functionality will be executed at user mode and the main function of the microkernel is to establishes a connection b/w client program and other device drivers/servers by messagse passing and this is its advantage. One of its Disadvantage is that Microkernels can suffers from performance decrease due to increase system function overhead because to provide functionality other than core functionlity, microkernels will have to pass messagse b/w client program and other device drivers/servers. example : L4Linux os .
 
+br
+Note : Message Passing : 
+<img src="./Image/message1.png" alt="mesage passing ">
+<br>
+<img src="./Image/message2.png" alt="message passing2">
 <br>
 <img src="./Image/Modules.png" alt="Modules of OS"> <br>
 
 5. Modules : It means modular approach is used in structuring of the OS. This is the best methodology for os design which involves using object oriented programming techniques to create modular kernel. In this Structure, we have a core kernel and this core kernel will have only the core functionality of the kernel and the other functionalities are present in the form of modules which will be loaded dynamically either at boot time or run time. 
-
+example : sun solaris os .
 # Os Operations: dual and multimode : 
 
 Multimode operations in an operating system refer to the system's ability to operate in multiple modes, typically user mode and kernel mode, allowing it to efficiently and securely manage resources while differentiating between user-level and system-level operations. Multimode operations enhance security and stability by restricting certain operations based on the mode the system is in, reducing the risk of unauthorized access or system failures.
@@ -147,7 +152,7 @@ Note : Program on execution is called as process.
 4. Multitasking Os : It allows a user to perform more than one computer task at the same time. In this Os, CPU provides some amount of time(a time quantum) to each process present in RAM. It is more responsive towards process.like server.
 <br>
 
-5. Network Os : An Operating system, which includes software and associated protocols to communicate with other computers and share their resources to each other via a network conveniently . Clusterd os is an example of this type of system (in this os , several devices are connect to same local network for execution process.)
+5. Network Os : An Operating system, which includes software and associated protocols to communicate with other computers and share their resources to each other via a network conveniently . Clusterd os is an example of this type of system (in this os , several devices are connect to same local network for execution of process.)
 <br>
 
 6. Real Time Os : In Real-Time Systems, each job carries a certain deadline within which the job is supposed to be completed, otherwise, the huge loss will be there, or even if the result is produced, it will be completely useless. It is of three types :
@@ -158,6 +163,8 @@ Note : Program on execution is called as process.
 
 7. Distributed OS : The Distributed Operating system is not installed on a single machine, it is divided into parts, and these parts are loaded on different machines. A part of the distributed Operating system is installed on each machine to make their communication possible.
 
+8.Time Sharing Os :
+A Time-Sharing Operating System allows multiple users to access the system concurrently, and this occurs by allocating a small time slice or quantum to each task.
 
 <br>
 
@@ -172,6 +179,7 @@ The Process Control Block (PCB) is a critical data structure in the operating sy
 # Process Schedular :
 
 # Process Queues :
+The waiting queue exists in the kernel space of an operating system. It is part of the operating system's process management subsystem and is implemented as a data structure in the kernel memory.
 
 # Threads :
 Threads are lightweight units of execution within a process, sharing the same memory space and resources. It is also known as lightweight process.
@@ -299,7 +307,7 @@ Bounded Waiting : not satisfied
 
 
 lock = false;
-while(test_set(lock)):
+while(test_set(lock));
 // critical section
 lock = false // exit secion
 
@@ -323,8 +331,8 @@ we can check mutual exclusion is satisfied by checking the multiple process ente
 <br>
 Progress : not satisfied in all condition because spin lock is caused.
 <br>
-We can check the Progress conditions by altering the process to enter into the critcal sections (if there are two process then intially allows the first process to enter into cs and then check if intially second process enters into the cs then does first blocks the first process or not).
-<br>
+We can check the Progress conditions by altering the process to enter into the critcal sections (if there are two process then intially allows the first process to enter into cs and then check if intially second process enters into the cs then does first blocks the second process or not).
+<br> 
 
 Bounded Waiting : satisfied (It means that everytime only one process is not executing).
 <br>
@@ -400,7 +408,7 @@ Note : In binary semaphores, the checking and setting of the semaphore value are
 When it is implemented at user level then checking and setting the semaphore value should be atomic.
 <br>
 2. Counting Semaphore :
-semaphore can be any integer value.
+semaphore can be any integer value (greater than or equal to 0 ).
 
 # DeadLock :
 It is a situation where no process got blocked and no process proceeds. All process are continuously waiting for infinite time.
@@ -433,10 +441,10 @@ To violate circular wait, we can assign a priority number to each of the resourc
 Among all the methods, violating Circular wait is the only approach that can be implemented practically.
 
 # Deadlock Avoidance 
-RGA , Banker's algorithms 
+RAG , Banker's algorithms 
 
 # Deadlock Detection and Recovery 
-
+RAG , Bankers's Algorithm
 # System Calls :
 A system call in an operating system (OS) is a mechanism that allows a user-space program to request a service or resource from the kernel, which operates in a more privileged mode. These services include tasks like file handling, memory management, process control, networking, and device I/O.
 
@@ -486,7 +494,7 @@ example are : chmod() which changes the ownership of a file or directory, allowi
 Note : The size of each partition will be equal to the size of the process.
 
 # Compaction : 
-It means put all the used partition(partition loaded with process) at one end create a big free area of all the unused partition at other end for new process.
+It means put all the used partition(partition loaded with process) at one end and create a big free area of all the unused partition at other end for new process.
 
 <br>
 
@@ -526,6 +534,10 @@ Disadvantages of Best Fit Algorithms:
 1. It is slower because it scans the entire list every time and tries to find out the smallest hole which can satisfy the requirement the process.
 2. Due to the fact that the difference between the whole size and the process size is very small, the holes produced will be as small as it cannot be used to load any process and therefore it remains useless.
 Despite of the fact that the name of the algorithm is best fit, It is not the best algorithm among all.
+<br>
+
+In Quick fit algorithm : The memory manager maintains separate lists of free memory blocks for commonly requested sizes (e.g., 4 KB, 8 KB, 16 KB, etc.).
+This avoids the need to search the entire list of free blocks for a suitable partition size during allocation.
 
 
 # Paging  :

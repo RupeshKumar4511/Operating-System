@@ -25,9 +25,7 @@ def fcfs(processes):
             current_time = process.completion_time
                
             total_waiting_time += process.waiting_time
-
-
-
+     
         print("Process_Id \t Arrival_time \t Burst_Time \t Start_time \t Completion_time \t Waiting time \t  Turn around time" )
 
 
