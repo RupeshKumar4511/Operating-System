@@ -149,7 +149,7 @@ Note : Program on execution is called as process.
 3. Multiprocessing Os :  There are more than one processors present in the system which executes more than one process at a time.
 <br>
 
-4. Multitasking Os : It allows a user to perform more than one computer task at the same time. In this Os, CPU provides some amount of time(a time quantum) to each process present in RAM. It is more responsive towards process.like server.
+4. Multitasking Os : It allows a user to perform more than one computer task at the same time. In this Os, CPU provides some amount of time(a time quantum) to each process present in RAM. It is more responsive towards process.
 <br>
 
 5. Network Os : An Operating system, which includes software and associated protocols to communicate with other computers and share their resources to each other via a network conveniently . Clusterd os is an example of this type of system (in this os , several devices are connect to same local network for execution of process.)
@@ -164,7 +164,7 @@ Note : Program on execution is called as process.
 7. Distributed OS : The Distributed Operating system is not installed on a single machine, it is divided into parts, and these parts are loaded on different machines. A part of the distributed Operating system is installed on each machine to make their communication possible.
 
 8.Time Sharing Os :
-A Time-Sharing Operating System allows multiple users to access the system concurrently, and this occurs by allocating a small time slice or quantum to each task.
+A Time-Sharing Operating System allows multiple users to access the system concurrently, and this occurs by allocating a small time slice or quantum to each task.like server.
 
 <br>
 
@@ -181,31 +181,43 @@ The Process Control Block (PCB) is a critical data structure in the operating sy
 # Process Queues :
 The waiting queue exists in the kernel space of an operating system. It is part of the operating system's process management subsystem and is implemented as a data structure in the kernel memory.
 
+# Process and Threads:
+When the same type of task are repeated then we can make copy of same process or we can use multithreading.
+<br>
+<img src="./Image/pt.jpg" alt="diff">
+<br>
+<br>
+<img src="./Image/thread.jpg" alt="thread">
+
 # Threads :
 Threads are lightweight units of execution within a process, sharing the same memory space and resources. It is also known as lightweight process.
+<br>
+Remember that threads are created and managed by application using thread library.
 
 # Multithreading :
 Multithreading is a technique used in operating systems to improve the performance and responsiveness of computer systems. Multithreading allows multiple threads (i.e., lightweight processes) to share the same resources of a single process, such as the CPU, memory, and I/O devices. For example, in a browser, multiple tabs can be different threads. MS Word uses multiple threads: one thread to format the text, another thread to process inputs, etc.
 
 # Multithreading Models :
 The Multithreading Model defines how threads are managed and mapped between user and kernel space in an operating system. This model impacts how threads perform, how they're scheduled, and how they interact with each other and system resources. There are three main multithreading models:
-
+<br>
 1. Many-to-One Model
-In the many-to-one model, multiple user-level threads are mapped to a single kernel thread. The OS doesn’t need to know about the individual user threads because they’re managed entirely in user space by a user-level library.
-
+In the many-to-one model, multiple user-level threads are mapped to a single kernel thread. The OS doesn't need to know about the individual user threads because they're managed entirely in user space by a user-level library.
+<br>
 Characteristics:
 Only one user thread can access the kernel at a time.
 The entire process blocks if a thread performs a blocking system call.
-Efficient thread creation and management because no kernel involvement is required.
+Efficient thread creation and management because no kernel involvement is required because it is implemented in user space.
 Limited concurrency, as only one thread can run in the kernel at a time on a single CPU.
+<br>
 Use Case:
-Mostly used in older systems or environments where concurrency is needed but full parallelism isn’t essential.
+Mostly used in older systems or environments where concurrency is needed but full parallelism isn't essential.
 Disadvantages:
 Limited ability to utilize multicore systems since only one kernel thread represents all user threads.
 A blocking call in one thread can block the entire process, affecting responsiveness.
+<br>
 2. One-to-One Model
 In the one-to-one model, each user thread maps directly to a kernel thread. This model provides greater concurrency than the many-to-one model since multiple threads can run on multiple cores simultaneously.
-
+<br>
 Characteristics:
 Each user thread is created as a separate kernel thread, allowing for true parallelism.
 Blocking calls by one thread do not block other threads because each thread has its own kernel thread.
@@ -215,9 +227,10 @@ Widely used in operating systems like Linux and Windows, where higher concurrenc
 Disadvantages:
 Thread creation is slower and consumes more resources since each thread needs kernel support.
 Can lead to higher overhead due to the large number of kernel threads.
+<br>
 3. Many-to-Many Model
 The many-to-many model provides a compromise between the many-to-one and one-to-one models by allowing multiple user-level threads to be mapped to a smaller or equal number of kernel threads. This enables the OS to manage user threads with greater flexibility.
-
+<br>
 Characteristics:
 Multiple user threads can be executed in parallel on multiple kernel threads.
 The system can dynamically allocate kernel threads based on the number of active user threads.
@@ -227,21 +240,25 @@ Used in environments where a balance between resource management and parallelism
 Disadvantages:
 Complexity in implementation due to the need for an intermediate layer to manage the mapping.
 Requires the OS to have good support for managing the mapping, which can introduce overhead.
-4. Two-Level Model
-The two-level model is similar to the many-to-many model but allows certain user threads to be directly mapped to a kernel thread, bypassing the many-to-many mapping. This direct mapping provides additional flexibility and control, allowing applications to optimize certain threads for performance or prioritize them.
 
-Characteristics:
-Combines the best of both the one-to-one and many-to-many models.
-Provides both the efficiency of many-to-many and the dedicated performance of one-to-one.
-Flexible for applications that need certain threads to have direct kernel access.
-Use Case:
-This model is used in systems requiring both high concurrency and flexibility, such as real-time systems where certain threads must meet strict deadlines.
 
 
 # Multicore Programming :
 Multicore Programming refers to designing and implementing software that can take full advantage of systems with multiple CPU cores. This allows multiple tasks or parts of tasks to be executed simultaneously, improving performance and efficiency, especially for compute-intensive applications.
+<br>
+Key Concepts in Multicore Programming:
 
+Parallelism:
 
+Breaking a task into smaller sub-tasks that can run simultaneously on different cores.
+Two types:
+Data Parallelism: The same operation is performed on different pieces of data.
+Task Parallelism: Different tasks or operations are performed in parallel.
+Concurrency:
+
+Managing multiple tasks that may or may not execute simultaneously but appear to progress in overlapping time periods.
+<br>
+A Multithreaded application running on a traditional single core chips would have to interleave(context switching between) the threads.
 
 # Time related to Queues :
 
@@ -318,8 +335,10 @@ def test_set(target):
     return temp
 
 ```
-
-
+<br>
+Note : In Priority Inversion (Test set Lock Mechanism) spin lock is caused.
+<br>
+ 
 3.<b>Turn Variable Approach :</b>
 <br>
 For two process
@@ -329,7 +348,7 @@ Mutual Exclusion : satisfied
 we can check mutual exclusion is satisfied by checking the multiple process enters into the critical section.
 
 <br>
-Progress : not satisfied in all condition because spin lock is caused.
+Progress : not satisfied in all condition .
 <br>
 We can check the Progress conditions by altering the process to enter into the critcal sections (if there are two process then intially allows the first process to enter into cs and then check if intially second process enters into the cs then does first blocks the second process or not).
 <br> 
@@ -349,7 +368,24 @@ Mutual Exclusion : satisfied
 Progress : satisfied
 <br>
 Bounded Waiting : not satisfied  because dead lock is caused.
+<br>Failure of Bounded Waiting in the Algorithm
+The algorithm can fail to ensure bounded waiting due to a phenomenon called busy waiting and indefinite postponement. Here's why:
 
+Scenario
+Two processes, P0 and P1, want to enter the critical section:
+Initial State:
+interested[0] = false
+interested[1] = false
+P0 wants to enter:
+P0 sets interested[0] = true.
+It checks interested[1]. If interested[1] = false, it enters the critical section.
+P1 wants to enter at the same time:
+P1 sets interested[1] = true.
+It checks interested[0]. Since P0 is already in the critical section, it cannot proceed.
+Indefinite Postponement:
+When P0 exits the critical section, it sets interested[0] = false.
+However, if P0 immediately re-enters (e.g., it resets interested[0] = true before P1 can proceed), P1 might be perpetually blocked.
+<br>
 5.<b>Paterson Solution :</b>
 <br>
 For two process
@@ -419,7 +455,7 @@ It is a situation where no process got blocked and no process proceeds. All proc
 <br>
 In deadlock Prevention we need to false any of four conditions from (Mutual exclusion, Hold and Wait , No preemption,circular wait.)
 <br>
-1. Mutual Exclusion : To make it false we have to make all resources are sharable .But there some resources which are not sharable like printer,tapeDrive etc because these resources cannot shared by more than process ar a time.
+1. Mutual Exclusion : To make it false we have to make all resources are sharable .But there some resources which are not sharable like printer,tapeDrive etc because these resources cannot shared by more than process at a time.
 <br>
 2. Hold and Wait :
 To make it false when a process comes we provide all the resources what the process is demanding. But practically it is not possible because if we provide all resources to a single process then all other process will continuously waiting.
@@ -479,11 +515,15 @@ Examples are : getPId(),attributes,get system time and date.
 
 Inter-Process Communication related : It is used for the intercommunication process.
 examples are :  pipe(),create/delete connection etc
-
+<br>
+The pipe() system call in Unix/Linux is used to create a unidirectional communication channel between processes, typically parent and child processes. It provides a mechanism for processes to exchange data by reading and writing to a shared memory buffer.
 <br>
 
 Protection and Security related : There are also some Protection and Security related system calls.
 example are : chmod() which changes the ownership of a file or directory, allowing control over who has administrative rights to it.
+
+<br>
+For more details: https://www.geeksforgeeks.org/introduction-of-system-call/
 
 
 # Memory Management :
@@ -505,14 +545,15 @@ It is also called Defragmentation.
 It is a technique to remove the external fragmentation from Dynamic partition.
 
 # Disadvantages of Compaction : 
-It takes a lot of cpu utilization 
+It takes a lot of cpu utilization.
 <br>
-only possible when process supports supports dynamic reallocation.
+only possible when process supports dynamic reallocation.
+Dynamic reallocation in a process refers to the ability to adjust the allocation of memory or other resources during the runtime of a program,
 for ex : dynamically reallocation is possible in Arraylist in java program.
 <br>
 dynamically reallocation is not possible in Array in java program because of static memory management.
 
-# 
+# Data Structure used to represent partition:
 The Main concern for dynamic partitioning is keeping track of all the free and allocated partitions. However, the Operating system uses following data structures for this task.
 <br>
 1. Bit Map
@@ -558,7 +599,7 @@ The operating system maintains a page table for each process.
 <br>
 <b>Very Important Point</b>
 <br>
-Before loading a program into the main memory the os allocates a virtual address space .Virtual address space is the set of all addresses that a process can use to access memory.
+Before loading a program into the main memory the os creates process and allocates a virtual address space. Virtual address space is the set of all addresses(range of address) that a process can use to access memory.
 <br>
 Suppose a 32-bit process has a virtual address space of 4 GB:
 <br>
@@ -568,15 +609,14 @@ The heap grows upwards from a certain point (e.g., 0x00500000).
 The stack might start at the higher end of the address space and grow downwards (e.g., from 0xFFFF0000 downwards).
 <br>
 these virtual address space of a process is divided into fixed-size blocks known as pages.
-After dividing the virtual address space into pages (paging), memory management unit converts virtual addresses to physical addresses to load pages into main memory as needed.
-
+After dividing the virtual address space into pages (paging), some pages are loaded into the primary memory and some pages are stored into virtual memory.
 <b>Word:</b>
 
 A word is the natural data unit used by a CPU for processing. Its size can vary depending on the architecture (e.g., 4 bytes in a 32-bit architecture or 8 bytes in a 64-bit architecture).
 <br>
 The word size is the amount of data that the CPU can handle in a single operation, often aligning with the CPU's register size.
 <br>
-Page Table : Page Table is a data structure used by the virtual memory system to store the mapping between logical addresses and physical addresses.
+Page Table : Page Table is a data structure used by the operating system which helps MMU in mapping between logical addresses and physical addresses.
 <br>
 Logical Address = n bits  
 <br>
