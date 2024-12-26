@@ -615,6 +615,8 @@ After dividing the virtual address space into pages (paging), some pages are loa
 A word is the natural data unit used by a CPU for processing. Its size can vary depending on the architecture (e.g., 4 bytes in a 32-bit architecture or 8 bytes in a 64-bit architecture).
 <br>
 The word size is the amount of data that the CPU can handle in a single operation, often aligning with the CPU's register size.
+or 
+It is the minimum unit to represent the memory.
 <br>
 Page Table : Page Table is a data structure used by the operating system which helps MMU in mapping between logical addresses and physical addresses.
 <br>
@@ -626,6 +628,12 @@ Logical Address space = 2 ^ n bytes
 <br>
 This is same for the physical address space.
 <br>
+<img src="./Image/maping.jpg" alt="">
+<br>
+The virtual page number is passed to the pagemap using 20 address bits. Since the page number is passed in binary having 20 address bits means that the pagemap can have up to 2^20 records (since with 20 bits you can get 2^20 different numbers) This is also the reason why the page numbers are powers of 2.
+<br>
+Also the page offset defines the page size since 12 bits for offset means that we can address 2^12 = 4096 cells.
+<br>
 example : 
 let Logical Address = 24bit 
 let Page size = 4KB 
@@ -636,15 +644,141 @@ then logical address space = 2^24 Byte
 <br>
 No of bit required to represent a page = logical address - Page offset => 24 -12 = 12 
 <br>
-Total No of Pages = 2^12 Byte
+No of Pages = 2 ^ No of bit required to represent a page 
+<br>
+We can also calculate the No of pages = Logical Adress space/Size of 1 page 
 <br>
 Size of Page Table = Total No of pages * Size of one Page Entry => 2^12 * 1 = 2^12 Byte = 4KB
 <br>
 If size of a page entry is not given then 
 <br>
-Size of table is calculated by the  => Total No of pages * No of bit required to represent a single frame.
+Size of table is calculated by the  => Total No of pages * No of bit require to represent a single frame.
 
 # Demand Paging 
+# Causes of Thrashing
+Insufficient Physical Memory (RAM):
+
+When the system's memory is overcommitted, and the active processes collectively require more memory than is available in RAM.
+<br>
+High Degree of Multiprogramming:
+
+Too many processes running simultaneously, leading to frequent page faults as processes compete for memory.
+<br>
+Improper Page Replacement Policy:
+
+Inefficient or overly aggressive page replacement algorithms can increase the frequency of page faults.
+<br>
+Large Working Sets:
+When processes require large amounts of memory (working sets), and the system cannot accommodate all of them in RAM.
+
+# Detection of Thrashing
+The system can detect thrashing by monitoring the following indicators:
+<br>
+High Page Fault Rate:
+
+A significant increase in the frequency of page faults without corresponding improvements in system throughput.
+<br>
+Decreased CPU Utilization:
+
+The CPU remains idle or underutilized because it spends most of its time waiting for memory operations to complete.
+
+
+# Ways to Eliminate Thrashing :
+Adjust the swap file size:If the system swap file is not configured correctly, disk thrashing can also happen to you.
+<br>
+A swap file (or swap space) is a portion of the storage disk that is used as virtual memory when a computer's physical RAM (Random Access Memory) is full.
+
+# How to Prevent Thrashsing:
+1. Locality Model
+<br>
+Concept:
+The locality model is based on the observation that a process does not access all of its pages uniformly at all times. Instead, it accesses a subset of pages (called a locality) during a specific phase of execution.
+By keeping the pages of the current locality in memory, the system can minimize page faults and prevent thrashing.
+<br>
+Key Ideas:
+
+Locality:
+
+A set of pages that a process frequently uses during a particular phase of its execution.
+Localities change over time as the process transitions between different phases (e.g., initialization, computation, or I/O).
+<br>
+Dynamic Adjustment:
+
+The operating system dynamically detects the active locality of a process and ensures that enough frames are allocated to hold it.
+<br>
+Advantages:
+<br>
+Prevents unnecessary page replacements by focusing on keeping the currently needed pages in memory.
+Reduces the risk of thrashing by ensuring that only essential pages are swapped in and out.
+<br>
+<br>
+2. Working Set Model
+<br>
+Concept:
+
+The working set model tracks the set of pages a process has recently accessed, called the working set. By ensuring the working set of each active process fits in memory, the system can avoid thrashing.
+<br>
+
+Details:
+
+Working Set Definition:
+
+A process's working set 
+W(t,Δ) at time t is the set of all pages the process accessed in the last Δ time units.
+<br>
+Key Parameters:
+Δ: The window size, which determines how far back in time to look for memory references.
+A small Δ may exclude some active pages(For example, if a process frequently cycles through 10 pages, but a small 
+Δ only captures the last 5 pages, the system might erroneously assume the process only needs those 5 pages.), 
+while a large Δ may include unnecessary pages(For example, if a process accessed 20 pages over a large 
+Δ, but only 10 pages are currently in active use, the system will allocate memory for all 20 pages.).
+<br>
+Operating System Actions:
+
+Periodically calculate the working set for each process.
+Allocate enough frames to each process to accommodate its working set.
+Suspend or swap out processes whose working sets cannot fit in memory.
+<br>
+Advantages:
+
+Dynamically adjusts memory allocation based on actual process behavior.
+Provides a balance between minimizing page faults and avoiding over-allocation of memory.
+<br>
+Challenges:
+
+Maintaining and calculating the working set can add overhead.
+
+<br><br>
+3. Page Fault Frequency (PFF)
+<br>
+Concept:
+
+The Page Fault Frequency (PFF) approach directly monitors the rate of page faults for each process. Based on the frequency, the operating system adjusts the number of frames allocated to the process.
+Details:
+<br>
+Page Fault Rate:
+
+If the page fault rate for a process exceeds a predefined upper threshold, it indicates that the process does not have enough frames.
+If the page fault rate falls below a lower threshold, it indicates that the process has more frames than needed.
+<br>
+Adjustments:
+High Page Fault Rate:
+Allocate more frames to the process to reduce page faults.
+Low Page Fault Rate:
+Remove excess frames from the process and reallocate them to other processes that might need them more.
+<br>
+Advantages:
+
+Simple and effective in managing memory allocation.
+Reduces thrashing by dynamically balancing memory among processes based on their actual needs.
+<br>
+Challenges:
+
+Requires careful tuning of thresholds to prevent overreaction.
+
+
+
+
 
 # File System : 
 It is a module present in almost all of the os . It basically divides the files logically into blocks and map it to the sectors of the hard disk .In this way it is used to store the file and fetch the files.
@@ -667,9 +801,9 @@ likedlist allocation and Indexed allocation are comes under this type of allocat
 
 # File Access methods 
 # Directory Structure 
-
+# Directory Structure
 # Magnetic Disk :
-It is a stoage device which provides large amount of secondary storage to modern computer.
+It is a storage device which provides large amount of secondary storage to modern computer.
 
 <br>
 <img src="./Image/magnetic.png" alt="magnetic disk image ">
@@ -709,14 +843,15 @@ Average Latency Time  = 1/2 * 1/rotational speed
 
 <br>
 
-Average Access Time : It is the total time required by read write in reading/ writing data to/from the disk . 
+Average Access Time : It is the total time required by read/write head in reading/ writing data to/from the disk . 
 
 <br>
 
 Average Access time  = average seek_time + average Latency_time + Data_transfer_time + controller_overhead + queue_delay 
 
 <br>
-
+Data transfer time in a magnetic disk refers to the time required to transfer data between the disk's storage media and the computer's main memory once the data location is identified and ready for transfer. 
+<br>  
 Data_transfer_time = 1/(No. of Sectors * rotational speed ) 
 
 <br>
@@ -730,3 +865,4 @@ Data_transfer_rate =   No of rotations/sec  * track capacity * no of heads
 
 
 
+# Disk Scheduling Algorithm
