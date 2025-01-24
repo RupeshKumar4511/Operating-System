@@ -409,10 +409,25 @@ find . -type f -maxdepth 1
 ```bash
 // delete all the file of type .txt at the same time from the current directory :
 
-find . -type f "*.txt" | -exec rm -rf {} +
+find . -type f "*.txt" -exec rm -rf {} +
 
 // {} all the directory of current folder stored into this placeholder.
 // + means all the files in that directory with '.txt' extension.
+
+
+find . -type f -name "*.txt" -exec sed -i 's/old_string/new_string/g' {} \;
+ 
+//sed performs the substitution:
+
+-i: Edits the file in place.
+
+s/old_string/new_string/: Replaces old_string with new_string.
+
+g: Global replacement within each line of the file.
+
+{}: Placeholder for the file being processed by find.
+
+\;: Marks the end of the -exec command.
 
 ```
 
@@ -464,7 +479,7 @@ grep -irwn "Mark" .
 ```bash
 // Regular expression
 
-grep -p "\w" file.txt
+grep -P "\w" file.txt
 
 // Here '\w' means that all the word(alphabet) in file.txt.
 
