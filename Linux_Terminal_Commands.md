@@ -415,7 +415,7 @@ find . -type f "*.txt" -exec rm -rf {} +
 // + means all the files in that directory with '.txt' extension.
 
 
-find . -type f -name "*.txt" -exec sed -i 's/old_string/new_string/g' {} \;
+find . -type f -name "*.txt" -exec sed -i 's/old_string/new_string/g' {} +
  
 //sed performs the substitution:
 
